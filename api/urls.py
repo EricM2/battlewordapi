@@ -22,7 +22,7 @@ urlpatterns = [
     path('word/add/', views.addWord),
     path('subscriber/add/', views.addSubscriber),
     path('subscribers/', views.listSubscriber),
-    path('words/<int:stage>/<int:limit>', views.listWord),
+    path('words/<int:stage>/<int:limit>/<str:language>/', views.listWord),
     path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
 
 ]

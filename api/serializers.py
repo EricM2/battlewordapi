@@ -6,7 +6,7 @@ from rest_framework import serializers
 class WordSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Word
-        fields = ['word', 'hint', 'stage']
+        fields = ['word', 'hint', 'stage','lang_code']
 
 
 class SubscriberSerializer(serializers.HyperlinkedModelSerializer):

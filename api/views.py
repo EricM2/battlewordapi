@@ -10,13 +10,16 @@ from rest_framework.parsers import JSONParser
 from rest_framework.decorators import api_view
 import uuid
 import json
+import random
 
 
 
 @csrf_exempt
 @api_view(['POST'])
 def addWord(request):
+    print(request.headers)
     data = JSONParser().parse(request)
+    print(data)
     serializer = WordSerializer(data=data)
     if serializer.is_valid():
         serializer.save()
@@ -39,10 +42,21 @@ def addSubscriber(request):
 
 
 @api_view()
-def listWord(request,stage,limit):
-    words = Word.objects.filter(stage=stage)
+def listWord(request,stage,limit,language):
+    words = Word.objects.filter(stage=stage).filter(lang_code=language)
+    
     serializer = WordSerializer(words, many=True)
-    return JsonResponse(serializer.data, safe=False)
+    data = serializer.data
+    print(type(data))
+    random.shuffle(data)
+    print(type(data))
+    top10 = []
+    if(len(data) > 10):
+        top10 = data[:10]
+    else:
+        top10 = data
+    print(type(top10))
+    return JsonResponse(top10, safe=False)
 
 
 @api_view()
